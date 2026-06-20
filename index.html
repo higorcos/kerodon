@@ -1462,22 +1462,25 @@
         <div class="footer-col">
           <h4>Contato</h4>
           <ul>
-            <li><a href="https://wa.me/5581999999999" target="_blank" rel="noopener">+55 (81) 9 9999-9999</a></li>
+            <li><a href="https://wa.me/5581999999999" target="_blank" rel="noopener">+55 (98) 99119-0311</a></li>
             <li><a href="https://instagram.com/kerodon.digital" target="_blank" rel="noopener">@kerodon.digital</a></li>
             <li><a href="mailto:contato@kerodon.com.br">contato@kerodon.com.br</a></li>
-            <li><a href="#contato">Recife, Pernambuco</a></li>
+            <li><a href="#contato">São Luís, Maranhão</a></li>
           </ul>
         </div>
 
       </div>
 
       <div class="footer-bottom">
-        <p>&copy; 2025 <strong>KERODON</strong>. Todos os direitos reservados.</p>
+        <p>&copy; <span id="year"></span> <strong>KERODON</strong>. Todos os direitos reservados.</p>
         <p>Feito com propósito no <strong>Nordeste brasileiro</strong>.</p>
       </div>
     </div>
   </footer>
 
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
   <script>
     // ─── HEADER SCROLL ────────────────────────────────
     const header = document.getElementById('header');
