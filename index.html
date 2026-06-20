@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="KERODON — Soluções digitais modernas. Desenvolvimento de sistemas personalizados, sites profissionais e presença digital para empresas que querem crescer. Nordestino de raiz. Digital de essência.">
-  <meta name="keywords" content="desenvolvimento de sistemas, sites profissionais, presença digital, automações, dashboards, Instagram, Recife, Nordeste">
+  <meta name="description" content="KERODON — Empresa de desenvolvimento de software. Sistemas sob medida, automações, dashboards e aplicações web para empresas que querem mais produtividade.">
+  <meta name="keywords" content="desenvolvimento de software, sistemas web, automação de processos, dashboards, aplicações web, Recife, Nordeste">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#96A480">
-  <title>KERODON — Nordestino de raiz. Digital de essência.</title>
-  <meta property="og:title" content="KERODON — Nordestino de raiz. Digital de essência.">
-  <meta property="og:description" content="Sistemas personalizados, sites profissionais e soluções digitais para empresas que querem crescer.">
+  <title>KERODON — Desenvolvimento de Software sob medida.</title>
+  <meta property="og:title" content="KERODON — Desenvolvimento de Software sob medida.">
+  <meta property="og:description" content="Sistemas, automações e aplicações web para empresas que precisam de tecnologia que funciona.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="pt_BR">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -80,9 +80,7 @@
       font-size: .875rem; font-weight: 600; text-decoration: none;
       cursor: pointer; border: none; transition: var(--t);
     }
-    .btn-primary {
-      background: var(--green); color: var(--white);
-    }
+    .btn-primary { background: var(--green); color: var(--white); }
     .btn-primary:hover {
       background: var(--green-dark); transform: translateY(-2px);
       box-shadow: 0 8px 24px rgba(150,164,128,.35);
@@ -96,39 +94,28 @@
       transform: translateY(-2px);
     }
     .btn-lg { padding: 17px 36px; font-size: .95rem; }
-    .btn-white {
-      background: var(--white); color: var(--green-dark);
-    }
-    .btn-white:hover {
-      background: var(--green-xlight); transform: translateY(-2px);
-    }
+    .btn-white { background: var(--white); color: var(--green-dark); }
+    .btn-white:hover { background: var(--green-xlight); transform: translateY(-2px); }
 
     /* ─── ANIMATIONS ──────────────────────────────────── */
     @keyframes fadeSlideUp {
       from { opacity: 0; transform: translateY(28px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    @keyframes fadeIn {
-      from { opacity: 0; } to { opacity: 1; }
-    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes keroFloat {
       0%,100% { transform: translateY(0); }
       50%      { transform: translateY(-14px); }
-    }
-    @keyframes rotateSlow {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
     }
     @keyframes pulseDot {
       0%,100% { opacity: .2; transform: scale(1); }
       50%     { opacity: .5; transform: scale(1.4); }
     }
-    @keyframes shimmer {
-      0%   { background-position: -200% center; }
-      100% { background-position: 200% center; }
-    }
 
-    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity .7s var(--ease), transform .7s var(--ease);
+    }
     .reveal.show { opacity: 1; transform: translateY(0); }
     .reveal-fade { opacity: 0; transition: opacity .7s var(--ease); }
     .reveal-fade.show { opacity: 1; }
@@ -168,7 +155,8 @@
 
     .hamburger {
       display: none; background: none; border: none;
-      cursor: pointer; padding: 6px; flex-direction: column; gap: 5px;
+      cursor: pointer; padding: 6px; flex-direction: column;
+      gap: 5px; z-index: 901; position: relative;
     }
     .hamburger span {
       display: block; width: 22px; height: 2px;
@@ -178,21 +166,73 @@
     .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
     .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    .mobile-nav {
-      display: none; position: fixed; inset: 0; z-index: 899;
-      background: var(--bg); flex-direction: column;
-      align-items: center; justify-content: center; gap: 28px;
-      padding: 40px 24px;
+    /* ─── DRAWER (MOBILE MENU) ────────────────────────── */
+    .drawer-backdrop {
+      position: fixed; inset: 0; z-index: 898;
+      background: rgba(45,49,44,.52);
+      opacity: 0; pointer-events: none;
+      transition: opacity .35s var(--ease);
+      backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
     }
-    .mobile-nav.open { display: flex; }
-    .mobile-nav a {
-      font-family: var(--serif); font-size: 1.9rem; font-weight: 400;
-      color: var(--ink); text-decoration: none; transition: var(--t);
+    .drawer-backdrop.open { opacity: 1; pointer-events: all; }
+
+    .drawer {
+      position: fixed; top: 0; right: 0; bottom: 0; z-index: 899;
+      width: min(340px, 88vw);
+      background: var(--white);
+      transform: translateX(100%);
+      transition: transform .38s var(--ease);
+      display: flex; flex-direction: column;
+      padding: 28px 28px 36px;
+      box-shadow: -8px 0 48px rgba(45,49,44,.16);
+      overflow-y: auto;
     }
-    .mobile-nav a:hover { color: var(--green); }
-    .mobile-nav hr {
-      width: 40px; border: none; border-top: 1px solid var(--sand); margin: 4px 0;
+    .drawer.open { transform: translateX(0); }
+
+    .drawer-head {
+      display: flex; align-items: center;
+      justify-content: space-between; margin-bottom: 44px;
+      flex-shrink: 0;
     }
+    .drawer-close {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: var(--bg); border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--ink); transition: var(--t); flex-shrink: 0;
+    }
+    .drawer-close:hover { background: var(--sand); }
+
+    .drawer-nav {
+      display: flex; flex-direction: column; flex: 1;
+    }
+    .drawer-link {
+      font-size: 1.05rem; font-weight: 500; color: var(--ink);
+      text-decoration: none; padding: 15px 0;
+      border-bottom: 1px solid var(--bg);
+      transition: var(--t); display: flex; align-items: center;
+      justify-content: space-between;
+    }
+    .drawer-link:last-child { border-bottom: none; }
+    .drawer-link:hover { color: var(--green-dark); padding-left: 8px; }
+    .drawer-arrow {
+      font-size: .9rem; color: var(--green-light);
+      transition: var(--t); opacity: 0; line-height: 1;
+    }
+    .drawer-link:hover .drawer-arrow { opacity: 1; color: var(--green); }
+
+    .drawer-footer {
+      margin-top: 36px; padding-top: 28px;
+      border-top: 1px solid var(--bg); flex-shrink: 0;
+    }
+    .drawer-footer .btn { width: 100%; justify-content: center; margin-bottom: 14px; }
+    .drawer-contact {
+      text-align: center; font-size: .8rem; color: var(--ink-muted);
+    }
+    .drawer-contact a {
+      color: var(--green-dark); text-decoration: none;
+      font-weight: 600; transition: var(--t);
+    }
+    .drawer-contact a:hover { color: var(--green); }
 
     /* ─── HERO ────────────────────────────────────────── */
     .hero {
@@ -241,12 +281,21 @@
       animation: fadeSlideUp .6s var(--ease) .4s both;
     }
 
+    .hero-pillars {
+      display: flex; gap: 24px; margin-top: 44px;
+      animation: fadeSlideUp .6s var(--ease) .5s both;
+    }
+    .hero-pillar {
+      display: flex; align-items: center; gap: 7px;
+      font-size: .8rem; font-weight: 500; color: var(--ink-muted);
+    }
+    .hero-pillar svg { color: var(--green); flex-shrink: 0; }
+
     .hero-illus {
       display: flex; justify-content: center; align-items: center;
       animation: fadeIn .9s var(--ease) .35s both;
     }
     .hero-illus svg { width: 100%; max-width: 510px; height: auto; }
-
     .kerodon-float { animation: keroFloat 7s ease-in-out infinite; }
 
     /* ─── ABOUT ───────────────────────────────────────── */
@@ -255,7 +304,6 @@
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 80px; align-items: center;
     }
-    .about-visual { position: relative; }
     .about-card {
       background: var(--bg); border-radius: var(--r-xl);
       padding: 48px; position: relative; overflow: hidden;
@@ -272,7 +320,6 @@
     .about-slogan::before {
       content: '"'; font-size: 4rem; line-height: .8;
       color: var(--green-light); display: block; margin-bottom: 8px;
-      font-family: var(--serif);
     }
     .about-divider {
       width: 40px; height: 2px; background: var(--green);
@@ -286,11 +333,7 @@
       font-family: var(--serif); font-size: 2.5rem;
       color: var(--green-dark); line-height: 1;
     }
-    .stat-lbl {
-      font-size: .8rem; color: var(--ink-muted); font-weight: 500;
-    }
-
-    .about-content .tag { margin-bottom: 12px; }
+    .stat-lbl { font-size: .8rem; color: var(--ink-muted); font-weight: 500; }
     .about-content p {
       color: var(--ink-muted); line-height: 1.78; margin-top: 16px;
     }
@@ -319,15 +362,46 @@
     }
     .service-card:hover::after { transform: scaleX(1); }
 
+    /* Complementary card — full width, subdued */
+    .service-card.complement {
+      grid-column: 1 / -1;
+      background: var(--green-xlight);
+      border-color: var(--green-light);
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 36px; align-items: start;
+    }
+    .service-card.complement::after { display: none; }
+    .service-card.complement:hover {
+      transform: translateY(-3px); border-color: var(--green);
+    }
+    .complement-left { display: flex; flex-direction: column; gap: 0; }
+    .complement-tag {
+      display: inline-block; background: var(--green-light);
+      color: var(--green-dark); padding: 3px 12px; border-radius: 50px;
+      font-size: .7rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; margin-bottom: 20px; white-space: nowrap;
+    }
+    .complement-divider {
+      display: none;
+    }
+
     .svc-icon {
       width: 54px; height: 54px; border-radius: var(--r-md);
       background: var(--green-xlight); display: flex;
       align-items: center; justify-content: center;
       color: var(--green-dark); margin-bottom: 22px;
     }
+    .service-card.complement .svc-icon {
+      background: rgba(150,164,128,.2);
+    }
     .service-card h3 {
       font-family: var(--serif); font-size: 1.3rem;
       color: var(--ink); margin-bottom: 16px;
+    }
+    .service-card p.svc-desc {
+      font-size: .875rem; color: var(--ink-muted);
+      line-height: 1.65; margin-bottom: 16px;
     }
     .svc-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
     .svc-list li {
@@ -361,11 +435,13 @@
     }
     .diff-item h3 {
       font-family: var(--serif); font-size: 1.15rem; color: var(--ink);
+      line-height: 1.3;
     }
     .diff-item p { font-size: .875rem; color: var(--ink-muted); line-height: 1.68; }
 
-    /* ─── PLANS ───────────────────────────────────────── */
-    .plans { background: var(--bg); }
+    /* ─── PLANS (Complementary section at bottom) ─────── */
+    .complement-section { background: var(--bg); }
+    .complement-section .tag::before { background: var(--green); }
     .plans-head { text-align: center; max-width: 560px; margin: 0 auto 64px; }
     .plans-head .sec-sub { margin: 14px auto 0; }
 
@@ -413,10 +489,7 @@
       font-size: .875rem; color: var(--ink-muted);
     }
     .plan-card.featured .plan-features li { color: rgba(255,255,255,.88); }
-    .plan-check {
-      width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px;
-      color: var(--green);
-    }
+    .plan-check { width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px; color: var(--green); }
     .plan-card.featured .plan-check { color: var(--white); }
 
     .plan-btn {
@@ -424,13 +497,9 @@
       font-size: .875rem; font-weight: 600; text-decoration: none;
       transition: var(--t); margin-top: auto;
     }
-    .plan-btn-outline {
-      border: 1.5px solid var(--sand); color: var(--ink);
-    }
+    .plan-btn-outline { border: 1.5px solid var(--sand); color: var(--ink); }
     .plan-btn-outline:hover { border-color: var(--green); color: var(--green-dark); }
-    .plan-btn-solid {
-      background: var(--white); color: var(--green-dark);
-    }
+    .plan-btn-solid { background: var(--white); color: var(--green-dark); }
     .plan-btn-solid:hover { background: var(--green-xlight); }
 
     /* ─── PROCESS ─────────────────────────────────────── */
@@ -485,20 +554,25 @@
       background: radial-gradient(circle, rgba(150,164,128,.08) 0%, transparent 65%);
       border-radius: 50%;
     }
-    .cta-inner {
-      text-align: center; position: relative; z-index: 1;
-    }
+    .cta-inner { text-align: center; position: relative; z-index: 1; }
     .cta-inner .tag { color: var(--green-light); }
     .cta-inner .tag::before { background: var(--green-light); }
+    .cta-question {
+      font-family: var(--serif);
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      color: rgba(255,255,255,.55); font-weight: 400;
+      margin-bottom: 4px;
+    }
     .cta-title {
       font-family: var(--serif);
-      font-size: clamp(1.8rem, 3.8vw, 3rem);
+      font-size: clamp(2.2rem, 5vw, 4rem);
       font-weight: 400; color: var(--white);
-      max-width: 680px; margin: 0 auto 20px; line-height: 1.2;
+      line-height: 1.1; margin-bottom: 24px;
     }
+    .cta-title em { font-style: italic; color: var(--green-light); }
     .cta-text {
-      font-size: 1.05rem; color: rgba(255,255,255,.6);
-      max-width: 520px; margin: 0 auto 40px; line-height: 1.72;
+      font-size: 1rem; color: rgba(255,255,255,.55);
+      max-width: 480px; margin: 0 auto 40px; line-height: 1.72;
     }
 
     /* ─── CONTACT ─────────────────────────────────────── */
@@ -510,9 +584,7 @@
     .contact-info-list {
       display: flex; flex-direction: column; gap: 22px; margin-top: 32px;
     }
-    .contact-item {
-      display: flex; gap: 16px; align-items: flex-start;
-    }
+    .contact-item { display: flex; gap: 16px; align-items: flex-start; }
     .contact-icon {
       width: 48px; height: 48px; border-radius: var(--r-md);
       background: var(--green-xlight); display: flex;
@@ -602,10 +674,11 @@
     }
 
     @media (max-width: 900px) {
-      .diff-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      .diff-grid { grid-template-columns: repeat(2, 1fr); }
       .diff-item { grid-column: span 1 !important; }
+      .service-card.complement {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 768px) {
@@ -613,29 +686,24 @@
       nav, .header-cta .btn-primary { display: none; }
       .hamburger { display: flex; }
 
-      .hero-grid {
-        grid-template-columns: 1fr; gap: 48px; text-align: center;
-      }
+      .hero-grid { grid-template-columns: 1fr; gap: 48px; text-align: center; }
       .hero-illus { order: -1; }
       .hero-illus svg { max-width: 300px; }
       .hero-sub { margin-left: auto; margin-right: auto; }
       .hero-actions { justify-content: center; }
+      .hero-pillars { justify-content: center; flex-wrap: wrap; }
 
       .about-grid { grid-template-columns: 1fr; gap: 48px; }
       .services-grid { grid-template-columns: 1fr; }
-      .plans-grid {
-        grid-template-columns: 1fr;
-        max-width: 420px; margin: 0 auto;
-      }
+      .service-card.complement { grid-template-columns: 1fr; }
+
+      .plans-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
       .plan-card.featured { order: -1; }
 
-      .process-track {
-        grid-template-columns: 1fr 1fr; gap: 40px;
-      }
+      .process-track { grid-template-columns: 1fr 1fr; gap: 40px; }
       .process-track::before { display: none; }
 
       .contact-grid { grid-template-columns: 1fr; gap: 48px; }
-
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
       .footer-bottom { flex-direction: column; text-align: center; }
       .form-row { grid-template-columns: 1fr; }
@@ -660,12 +728,10 @@
     <div class="container">
       <div class="header-inner">
         <a href="#inicio" class="logo">
-          <!-- Logo mark: K in rounded square -->
           <svg class="logo-mark" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="36" height="36" rx="9" fill="#96A480"/>
             <path d="M12 9 L12 27 M12 18 L24 9 M12 18.5 L24 27"
-                  stroke="white" stroke-width="2.2"
-                  stroke-linecap="round" stroke-linejoin="round"/>
+                  stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           <span class="logo-name">KERODON</span>
         </a>
@@ -675,7 +741,6 @@
           <a href="#sobre">Sobre</a>
           <a href="#servicos">Serviços</a>
           <a href="#diferenciais">Diferenciais</a>
-          <a href="#planos">Planos</a>
           <a href="#contato">Contato</a>
         </nav>
 
@@ -689,18 +754,48 @@
     </div>
   </header>
 
-  <!-- Mobile nav -->
-  <div class="mobile-nav" id="mobileNav" role="dialog" aria-label="Menu mobile">
-    <a href="#inicio" class="mobile-link">Início</a>
-    <hr>
-    <a href="#sobre" class="mobile-link">Sobre</a>
-    <a href="#servicos" class="mobile-link">Serviços</a>
-    <a href="#diferenciais" class="mobile-link">Diferenciais</a>
-    <a href="#planos" class="mobile-link">Planos</a>
-    <a href="#contato" class="mobile-link">Contato</a>
-    <hr>
-    <a href="#contato" class="btn btn-primary btn-lg">Solicitar Orçamento</a>
-  </div>
+  <!-- ═══════════════════════════════════════════════════
+       DRAWER (MOBILE MENU)
+  ═══════════════════════════════════════════════════ -->
+  <div class="drawer-backdrop" id="drawerBackdrop" aria-hidden="true"></div>
+
+  <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Menu de navegação">
+    <div class="drawer-head">
+      <a href="#inicio" class="logo" id="drawerLogoLink">
+        <svg class="logo-mark" viewBox="0 0 36 36" fill="none">
+          <rect width="36" height="36" rx="9" fill="#96A480"/>
+          <path d="M12 9 L12 27 M12 18 L24 9 M12 18.5 L24 27"
+                stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="logo-name">KERODON</span>
+      </a>
+      <button class="drawer-close" id="drawerClose" aria-label="Fechar menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <nav class="drawer-nav" aria-label="Menu mobile">
+      <a href="#inicio" class="drawer-link">Início <span class="drawer-arrow">→</span></a>
+      <a href="#sobre" class="drawer-link">Sobre <span class="drawer-arrow">→</span></a>
+      <a href="#servicos" class="drawer-link">Serviços <span class="drawer-arrow">→</span></a>
+      <a href="#diferenciais" class="drawer-link">Diferenciais <span class="drawer-arrow">→</span></a>
+      <a href="#contato" class="drawer-link">Contato <span class="drawer-arrow">→</span></a>
+    </nav>
+
+    <div class="drawer-footer">
+      <a href="#contato" class="btn btn-primary drawer-cta-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/>
+        </svg>
+        Solicitar Orçamento
+      </a>
+      <p class="drawer-contact">
+        Ou fale agora via <a href="https://wa.me/5581999999999" target="_blank" rel="noopener">WhatsApp</a>
+      </p>
+    </div>
+  </aside>
 
   <main>
 
@@ -711,40 +806,53 @@
       <div class="container">
         <div class="hero-grid">
 
-          <!-- Content -->
           <div class="hero-content">
             <div class="hero-badge">
               <span class="hero-badge-dot"></span>
-              Nordestino de raiz. Digital de essência.
+              Empresa de desenvolvimento de software
             </div>
 
             <h1 class="hero-title">
-              Tecnologia, estratégia e<br>
-              <em>presença digital</em> para<br>
-              empresas que querem crescer.
+              Seu processo manual<br>
+              <em>vira sistema.</em><br>
+              Sua ideia vira software.
             </h1>
 
             <p class="hero-sub">
-              Desenvolvemos sistemas personalizados, sites profissionais e soluções digitais que ajudam negócios a ganhar eficiência, visibilidade e resultados.
+              Desenvolvemos sistemas web, automações e dashboards sob medida para empresas que querem mais produtividade e menos retrabalho.
             </p>
 
             <div class="hero-actions">
               <a href="#contato" class="btn btn-primary btn-lg">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 12a19.79 19.79 0 01-3.07-8.67A2 2 0 011.32 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 9.1a16 16 0 006.29 6.29l1.16-1.16a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+                  <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/>
                 </svg>
                 Solicitar orçamento
               </a>
               <a href="#servicos" class="btn btn-outline btn-lg">
-                Conhecer serviços
+                Ver serviços
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
                 </svg>
               </a>
             </div>
+
+            <div class="hero-pillars">
+              <div class="hero-pillar">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                Sistemas sob medida
+              </div>
+              <div class="hero-pillar">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                Automações
+              </div>
+              <div class="hero-pillar">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                Dashboards
+              </div>
+            </div>
           </div>
 
-          <!-- Illustration -->
           <div class="hero-illus" aria-hidden="true">
             <svg viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg">
               <defs>
@@ -762,16 +870,10 @@
                   <stop offset="100%" stop-color="#7d8d67"/>
                 </radialGradient>
               </defs>
-
-              <!-- Background glow -->
               <circle cx="260" cy="268" r="260" fill="url(#bgGlow)"/>
-
-              <!-- Concentric decorative rings -->
               <circle cx="248" cy="260" r="220" stroke="#96A480" stroke-width=".8" opacity=".08"/>
               <circle cx="248" cy="260" r="178" stroke="#96A480" stroke-width=".8" opacity=".11"/>
               <circle cx="248" cy="260" r="136" stroke="#96A480" stroke-width=".8" opacity=".14"/>
-
-              <!-- Dot grid — top right -->
               <circle cx="374" cy="90" r="2.5" fill="#96A480" opacity=".22"/>
               <circle cx="406" cy="90" r="2.5" fill="#96A480" opacity=".18"/>
               <circle cx="438" cy="90" r="2.5" fill="#96A480" opacity=".28"/>
@@ -788,74 +890,38 @@
               <circle cx="406" cy="186" r="2.5" fill="#96A480" opacity=".15"/>
               <circle cx="438" cy="186" r="2.5" fill="#96A480" opacity=".28"/>
               <circle cx="470" cy="186" r="2.5" fill="#96A480" opacity=".22"/>
-
-              <!-- Tech lines (connecting dots) -->
               <line x1="374" y1="90" x2="406" y2="90" stroke="#96A480" stroke-width=".6" opacity=".25"/>
               <line x1="406" y1="90" x2="438" y2="122" stroke="#96A480" stroke-width=".6" opacity=".18"/>
               <line x1="438" y1="122" x2="470" y2="122" stroke="#96A480" stroke-width=".6" opacity=".22"/>
               <line x1="374" y1="154" x2="374" y2="186" stroke="#96A480" stroke-width=".6" opacity=".18"/>
-
-              <!-- Main stone circle -->
               <circle cx="245" cy="268" r="172" fill="url(#stoneGrad)"/>
-
-              <!-- Rock formation at base -->
               <ellipse cx="240" cy="414" rx="132" ry="24" fill="#96A480" opacity=".18"/>
-              <path d="M112 422 Q150 398 198 405 Q228 397 258 402 Q292 394 328 407 Q355 398 385 418 L385 445 L112 445 Z"
-                    fill="url(#rockGrad)" opacity=".3"/>
+              <path d="M112 422 Q150 398 198 405 Q228 397 258 402 Q292 394 328 407 Q355 398 385 418 L385 445 L112 445 Z" fill="url(#rockGrad)" opacity=".3"/>
               <ellipse cx="195" cy="420" rx="58" ry="20" fill="#C8D1C0" opacity=".45"/>
               <ellipse cx="295" cy="425" rx="46" ry="17" fill="#D9D2C3" opacity=".38"/>
-
-              <!-- ── KERODON SILHOUETTE ── -->
               <g class="kerodon-float">
-                <!-- Body -->
                 <ellipse cx="258" cy="372" rx="62" ry="44" fill="#2D312C"/>
-                <!-- Neck connector -->
                 <ellipse cx="224" cy="354" rx="24" ry="19" fill="#2D312C"/>
-                <!-- Head -->
                 <circle cx="200" cy="334" r="42" fill="#2D312C"/>
-                <!-- Far ear (right, behind) -->
                 <ellipse cx="212" cy="294" rx="11" ry="21" fill="#3a3f39"/>
-                <!-- Near ear (left, front) -->
                 <ellipse cx="193" cy="291" rx="13" ry="25" fill="#2D312C"/>
-                <!-- Inner ear -->
                 <ellipse cx="193" cy="293" rx="8.5" ry="18" fill="#96A480" opacity=".65"/>
-                <!-- Eye white -->
                 <circle cx="183" cy="330" r="7.5" fill="#F5F2EA"/>
-                <!-- Eye iris -->
                 <circle cx="183" cy="330" r="5" fill="#2D312C"/>
-                <!-- Eye shine -->
                 <circle cx="185" cy="328" r="2.2" fill="white"/>
-                <!-- Nose -->
                 <ellipse cx="162" cy="337" rx="5.5" ry="4.5" fill="#4a4e49"/>
-                <!-- Nose highlight -->
                 <circle cx="161" cy="335" r="2" fill="#62675f" opacity=".55"/>
               </g>
-
-              <!-- Small floating tech elements -->
-              <path d="M64 165 L64 145 L84 145" stroke="#96A480" stroke-width="1.5"
-                    stroke-linecap="round" opacity=".22"/>
+              <path d="M64 165 L64 145 L84 145" stroke="#96A480" stroke-width="1.5" stroke-linecap="round" opacity=".22"/>
               <circle cx="64" cy="165" r="3" fill="#96A480" opacity=".28"/>
-
-              <path d="M444 355 L464 355 L464 375" stroke="#96A480" stroke-width="1.5"
-                    stroke-linecap="round" opacity=".18"/>
+              <path d="M444 355 L464 355 L464 375" stroke="#96A480" stroke-width="1.5" stroke-linecap="round" opacity=".18"/>
               <circle cx="444" cy="355" r="3" fill="#96A480" opacity=".22"/>
-
               <circle cx="385" cy="318" r="5.5" stroke="#96A480" stroke-width="1" opacity=".25"/>
               <circle cx="88" cy="310" r="4" stroke="#96A480" stroke-width="1" opacity=".18"/>
               <circle cx="426" cy="188" r="7" fill="#C8D1C0" opacity=".28"/>
               <circle cx="62" cy="195" r="4.5" fill="#C8D1C0" opacity=".22"/>
-
-              <!-- Diamond accents -->
-              <path d="M484 258 L494 268 L484 278 L474 268 Z"
-                    stroke="#96A480" stroke-width="1" opacity=".18"/>
-              <path d="M46 242 L54 250 L46 258 L38 250 Z"
-                    fill="#96A480" opacity=".12"/>
-
-              <!-- Subtle circuit corner (top left) -->
-              <path d="M94 92 L94 110 L112 110" stroke="#96A480"
-                    stroke-width=".8" opacity=".15" fill="none"/>
-              <path d="M94 92 L112 92" stroke="#96A480"
-                    stroke-width=".8" opacity=".1" fill="none"/>
+              <path d="M484 258 L494 268 L484 278 L474 268 Z" stroke="#96A480" stroke-width="1" opacity=".18"/>
+              <path d="M46 242 L54 250 L46 258 L38 250 Z" fill="#96A480" opacity=".12"/>
             </svg>
           </div>
 
@@ -870,40 +936,31 @@
       <div class="container">
         <div class="about-grid">
 
-          <!-- Visual card -->
           <div class="about-visual reveal">
             <div class="about-card">
               <p class="about-slogan">Nordestino de raiz.<br>Digital de essência.</p>
               <div class="about-divider"></div>
               <div class="about-stats">
                 <div class="about-stat">
-                  <span class="stat-num">4+</span>
-                  <span class="stat-lbl">Áreas de atuação</span>
-                </div>
-                <div class="about-stat">
                   <span class="stat-num">100%</span>
                   <span class="stat-lbl">Personalizado</span>
                 </div>
                 <div class="about-stat">
-                  <span class="stat-num">NE</span>
-                  <span class="stat-lbl">Origem nordestina</span>
+                  <span class="stat-num">0</span>
+                  <span class="stat-lbl">Templates genéricos</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Text -->
           <div class="about-content">
             <span class="tag reveal d1">Quem Somos</span>
-            <h2 class="sec-title reveal d2">Quem Somos</h2>
+            <h2 class="sec-title reveal d2">Desenvolvemos software para resolver problemas reais.</h2>
             <p class="reveal d3">
-              A Kerodon nasceu com a proposta de unir tecnologia e estratégia digital para atender empresas que buscam crescimento sustentável.
+              A Kerodon é uma empresa de desenvolvimento de software especializada em criar sistemas web, automações e aplicações sob medida para empresas que precisam de tecnologia que funciona.
             </p>
             <p class="reveal d4">
-              Desenvolvemos sistemas robustos, sites profissionais e soluções digitais capazes de transformar processos, fortalecer marcas e gerar resultados reais.
-            </p>
-            <p class="reveal d5">
-              Inspirados pela resistência e adaptação do mocó nordestino — o <em>Kerodon rupestris</em> — construímos soluções que se adaptam à realidade de cada cliente, com tecnologia, propósito e identidade regional.
+              Se o seu negócio tem um processo manual, repetitivo ou ineficiente — desenvolvemos a solução. Sem intermediários, sem template genérico, sem promessa vazia.
             </p>
           </div>
 
@@ -918,13 +975,13 @@
       <div class="container">
         <div class="services-head">
           <span class="tag reveal">Serviços</span>
-          <h2 class="sec-title reveal d1">O que fazemos</h2>
-          <p class="sec-sub reveal d2">Da criação de sistemas complexos à gestão da sua presença digital, cobrimos todas as frentes do universo digital.</p>
+          <h2 class="sec-title reveal d1">O que desenvolvemos</h2>
+          <p class="sec-sub reveal d2">Software para cada etapa da operação da sua empresa — do sistema central às automações do dia a dia.</p>
         </div>
 
         <div class="services-grid">
 
-          <!-- Card 1 -->
+          <!-- 1. Sistemas -->
           <div class="service-card reveal d1">
             <div class="svc-icon" aria-hidden="true">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -934,16 +991,50 @@
             </div>
             <h3>Desenvolvimento de Sistemas</h3>
             <ul class="svc-list">
-              <li>Sistemas personalizados</li>
-              <li>Dashboards e painéis administrativos</li>
-              <li>Controle operacional</li>
-              <li>Gestão interna</li>
-              <li>Automações de processos</li>
+              <li>Sistemas web sob medida</li>
+              <li>Plataformas internas</li>
+              <li>Módulos e funcionalidades personalizadas</li>
+              <li>Integrações entre sistemas via API</li>
             </ul>
           </div>
 
-          <!-- Card 2 -->
+          <!-- 2. Automações -->
           <div class="service-card reveal d2">
+            <div class="svc-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              </svg>
+            </div>
+            <h3>Automações</h3>
+            <ul class="svc-list">
+              <li>Automação de processos repetitivos</li>
+              <li>Eliminação de tarefas manuais</li>
+              <li>Workflows e gatilhos automáticos</li>
+              <li>Notificações e alertas inteligentes</li>
+            </ul>
+          </div>
+
+          <!-- 3. Dashboards -->
+          <div class="service-card reveal d3">
+            <div class="svc-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2"/>
+                <line x1="8" y1="21" x2="16" y2="21"/>
+                <line x1="12" y1="17" x2="12" y2="21"/>
+                <polyline points="6 9 9 12 12 9 15 12 18 9"/>
+              </svg>
+            </div>
+            <h3>Dashboards & Gestão</h3>
+            <ul class="svc-list">
+              <li>Painéis administrativos</li>
+              <li>Relatórios em tempo real</li>
+              <li>Controle operacional</li>
+              <li>Visualização e análise de dados</li>
+            </ul>
+          </div>
+
+          <!-- 4. Sites e Aplicações -->
+          <div class="service-card reveal d4">
             <div class="svc-icon" aria-hidden="true">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="10"/>
@@ -951,50 +1042,34 @@
                 <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
               </svg>
             </div>
-            <h3>Sites e Landing Pages</h3>
+            <h3>Sites e Aplicações Web</h3>
             <ul class="svc-list">
               <li>Sites institucionais</li>
-              <li>Landing pages</li>
-              <li>Portfólios digitais</li>
-              <li>Catálogos online</li>
-              <li>Otimização para SEO</li>
+              <li>Landing pages de conversão</li>
+              <li>Aplicações web interativas</li>
+              <li>SEO e performance</li>
             </ul>
           </div>
 
-          <!-- Card 3 -->
-          <div class="service-card reveal d3">
-            <div class="svc-icon" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-                <circle cx="12" cy="12" r="4"/>
-                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
-              </svg>
+          <!-- 5. Marketing Digital — COMPLEMENTAR (full-width) -->
+          <div class="service-card complement reveal d5">
+            <div class="complement-left">
+              <span class="complement-tag">Complementar</span>
+              <div class="svc-icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                  <circle cx="12" cy="12" r="4"/>
+                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                </svg>
+              </div>
+              <h3>Marketing Digital</h3>
+              <p class="svc-desc">Para empresas que querem manter presença digital consistente além da tecnologia.</p>
             </div>
-            <h3>Presença Digital</h3>
             <ul class="svc-list">
               <li>Gestão de Instagram</li>
-              <li>Planejamento de conteúdo</li>
               <li>Criação de posts e stories</li>
-              <li>Reels estratégicos</li>
-              <li>Conteúdo alinhado à marca</li>
-            </ul>
-          </div>
-
-          <!-- Card 4 -->
-          <div class="service-card reveal d4">
-            <div class="svc-icon" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.26a1 1 0 01-1.447.894L15 14"/>
-                <rect x="1" y="6" width="14" height="12" rx="2"/>
-              </svg>
-            </div>
-            <h3>Produção de Conteúdo</h3>
-            <ul class="svc-list">
-              <li>Captura de fotos e vídeos</li>
-              <li>Cobertura de eventos</li>
-              <li>Edição profissional</li>
-              <li>Conteúdo para campanhas</li>
-              <li>Material para redes sociais</li>
+              <li>Produção audiovisual</li>
+              <li>Planejamento de conteúdo</li>
             </ul>
           </div>
 
@@ -1009,8 +1084,8 @@
       <div class="container">
         <div class="diff-head">
           <span class="tag reveal">Por que KERODON</span>
-          <h2 class="sec-title reveal d1">Nossos diferenciais</h2>
-          <p class="sec-sub reveal d2">O que nos move é entregar tecnologia com propósito, proximi­dade no atendimento e soluções que realmente transformam.</p>
+          <h2 class="sec-title reveal d1">Diferenciais que importam.</h2>
+          <p class="sec-sub reveal d2">Não prometemos tecnologia. Entregamos resultado.</p>
         </div>
 
         <div class="diff-grid">
@@ -1018,24 +1093,21 @@
           <div class="diff-item reveal d1">
             <div class="diff-icon" aria-hidden="true">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="3" width="8" height="8" rx="1.5"/>
-                <rect x="13" y="3" width="8" height="8" rx="1.5"/>
-                <rect x="3" y="13" width="8" height="8" rx="1.5"/>
-                <rect x="13" y="13" width="8" height="8" rx="1.5"/>
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
               </svg>
             </div>
-            <h3>Soluções Sob Medida</h3>
-            <p>Cada projeto é desenvolvido de acordo com a necessidade real do cliente. Nada de template genérico — tudo personalizado do zero.</p>
+            <h3>Menos planilhas.<br>Mais produtividade.</h3>
+            <p>Automatizamos tarefas manuais para que sua equipe foque no que realmente gera resultado.</p>
           </div>
 
           <div class="diff-item reveal d2">
             <div class="diff-icon" aria-hidden="true">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
               </svg>
             </div>
-            <h3>Tecnologia com Propósito</h3>
-            <p>Não vendemos ferramentas. Criamos soluções que resolvem problemas reais e geram impacto mensurável no seu negócio.</p>
+            <h3>Menos retrabalho.<br>Mais controle.</h3>
+            <p>Sistemas desenvolvidos para o seu processo real — não adaptações de templates que nunca encaixam direito.</p>
           </div>
 
           <div class="diff-item reveal d3">
@@ -1046,11 +1118,22 @@
                 <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
               </svg>
             </div>
-            <h3>Atendimento Próximo</h3>
-            <p>Relacionamento direto e acompanhamento constante. Você não é um número de ticket — é um parceiro que acompanhamos de perto.</p>
+            <h3>Você fala direto<br>com quem desenvolve.</h3>
+            <p>Sem intermediários. A equipe que cria o sistema é a mesma que atende, entende e entrega.</p>
           </div>
 
           <div class="diff-item reveal d4">
+            <div class="diff-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="16 18 22 12 16 6"/>
+                <polyline points="8 6 2 12 8 18"/>
+              </svg>
+            </div>
+            <h3>Soluções desenvolvidas<br>para o seu processo.</h3>
+            <p>Levantamos os requisitos, entendemos a operação e desenvolvemos exatamente o que o seu negócio precisa.</p>
+          </div>
+
+          <div class="diff-item reveal d5">
             <div class="diff-icon" aria-hidden="true">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <polygon points="12 2 2 7 12 12 22 7 12 2"/>
@@ -1058,138 +1141,8 @@
                 <polyline points="2 12 12 17 22 12"/>
               </svg>
             </div>
-            <h3>Presença Digital Integrada</h3>
-            <p>Tecnologia e comunicação trabalhando juntas. Sistemas, sites e redes sociais em uma estratégia única e coerente.</p>
-          </div>
-
-          <div class="diff-item reveal d5">
-            <div class="diff-icon" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-                <circle cx="12" cy="10" r="3"/>
-              </svg>
-            </div>
-            <h3>Identidade Regional</h3>
-            <p>Empresa nordestina com visão moderna e alcance digital. Entendemos a realidade local e entregamos soluções com alma.</p>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════════
-         PLANOS
-    ═══════════════════════════════════════════════════ -->
-    <section class="plans section" id="planos">
-      <div class="container">
-        <div class="plans-head">
-          <span class="tag reveal">Planos para Redes Sociais</span>
-          <h2 class="sec-title reveal d1">Presença digital que funciona</h2>
-          <p class="sec-sub reveal d2">Planos pensados para cada momento da jornada da sua empresa nas redes sociais.</p>
-        </div>
-
-        <div class="plans-grid">
-
-          <!-- Básico -->
-          <div class="plan-card reveal d1">
-            <div class="plan-top">
-              <p class="plan-name">Básico</p>
-              <p class="plan-desc">Ideal para quem está começando.</p>
-            </div>
-            <ul class="plan-features">
-              <li>
-                <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                3 posts por semana
-              </li>
-              <li>
-                <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                3 stories por semana
-              </li>
-              <li>
-                <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                Planejamento mensal
-              </li>
-              <li>
-                <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                1 reunião mensal
-              </li>
-            </ul>
-            <a href="#contato" class="plan-btn plan-btn-outline">Começar agora</a>
-          </div>
-
-          <!-- Intermediário (featured) -->
-          <div class="plan-card featured reveal d2">
-            <span class="plan-badge">Mais popular</span>
-            <div class="plan-top">
-              <p class="plan-name">Intermediário</p>
-              <p class="plan-desc">Para empresas em crescimento.</p>
-            </div>
-            <ul class="plan-features">
-              <li>
-                <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                5 posts por semana
-              </li>
-              <li>
-                <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                5 stories por semana
-              </li>
-              <li>
-                <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                2 vídeos por mês
-              </li>
-              <li>
-                <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                Banco de ideias para reels
-              </li>
-              <li>
-                <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                Planejamento estratégico
-              </li>
-              <li>
-                <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                2 reuniões mensais
-              </li>
-            </ul>
-            <a href="#contato" class="plan-btn plan-btn-solid">Começar agora</a>
-          </div>
-
-          <!-- Premium -->
-          <div class="plan-card reveal d3">
-            <div class="plan-top">
-              <p class="plan-name">Premium</p>
-              <p class="plan-desc">Presença digital completa.</p>
-            </div>
-            <ul class="plan-features">
-              <li>
-                <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                5 posts por semana
-              </li>
-              <li>
-                <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                Stories diários
-              </li>
-              <li>
-                <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                4 vídeos por mês
-              </li>
-              <li>
-                <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                Conteúdo alinhado às tendências
-              </li>
-              <li>
-                <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                Cobertura de eventos
-              </li>
-              <li>
-                <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                Relatório mensal
-              </li>
-              <li>
-                <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                Consultoria personalizada
-              </li>
-            </ul>
-            <a href="#contato" class="plan-btn plan-btn-outline">Começar agora</a>
+            <h3>Software que cresce<br>com a sua empresa.</h3>
+            <p>Código limpo, arquitetura escalável. O sistema que entregamos hoje suporta o crescimento de amanhã.</p>
           </div>
 
         </div>
@@ -1203,8 +1156,8 @@
       <div class="container">
         <div class="process-head">
           <span class="tag reveal">Como Trabalhamos</span>
-          <h2 class="sec-title reveal d1">Do briefing ao resultado</h2>
-          <p class="sec-sub reveal d2">Um processo simples, claro e focado em resultados concretos para o seu negócio.</p>
+          <h2 class="sec-title reveal d1">Do briefing ao deploy.</h2>
+          <p class="sec-sub reveal d2">Um processo direto, sem burocracia e focado em entregar o sistema funcionando.</p>
         </div>
 
         <div class="process-track" role="list">
@@ -1212,25 +1165,25 @@
           <div class="process-step reveal d1" role="listitem">
             <div class="step-num" aria-hidden="true">1</div>
             <h3>Entendimento</h3>
-            <p>Conhecemos seu negócio, seu mercado e seus objetivos antes de propor qualquer solução.</p>
+            <p>Conhecemos o seu negócio, o processo atual e o problema que precisa ser resolvido.</p>
           </div>
 
           <div class="process-step reveal d2" role="listitem">
             <div class="step-num" aria-hidden="true">2</div>
             <h3>Planejamento</h3>
-            <p>Definimos a melhor estratégia e o caminho mais eficiente para chegar aos resultados esperados.</p>
+            <p>Definimos a arquitetura, tecnologias, escopo e cronograma antes de escrever uma linha de código.</p>
           </div>
 
           <div class="process-step reveal d3" role="listitem">
             <div class="step-num" aria-hidden="true">3</div>
-            <h3>Execução</h3>
-            <p>Desenvolvemos a solução ou produzimos o conteúdo com qualidade, prazo e atenção ao detalhe.</p>
+            <h3>Desenvolvimento</h3>
+            <p>Construímos o sistema com código limpo, entregas incrementais e comunicação constante.</p>
           </div>
 
           <div class="process-step reveal d4" role="listitem">
             <div class="step-num" aria-hidden="true">4</div>
-            <h3>Evolução</h3>
-            <p>Acompanhamos resultados, analisamos métricas e identificamos oportunidades contínuas de melhoria.</p>
+            <h3>Entrega & Evolução</h3>
+            <p>Deploy, treinamento e suporte. Acompanhamos o sistema em produção e evoluímos conforme necessário.</p>
           </div>
 
         </div>
@@ -1244,18 +1197,16 @@
       <div class="container">
         <div class="cta-inner">
           <span class="tag reveal">Vamos começar?</span>
-          <h2 class="cta-title reveal d1">
-            Vamos construir a próxima<br>
-            <em style="font-style:italic; color: var(--green-light);">evolução digital</em> da sua empresa?
-          </h2>
-          <p class="cta-text reveal d2">
-            Da criação de sistemas à construção da sua presença digital, a Kerodon está pronta para transformar ideias em resultados.
+          <p class="cta-question reveal d1">Tem uma ideia de sistema?</p>
+          <h2 class="cta-title reveal d2">Nós <em>desenvolvemos.</em></h2>
+          <p class="cta-text reveal d3">
+            Do levantamento de requisitos ao deploy. Conte o que você precisa e a Kerodon transforma em software.
           </p>
-          <a href="#contato" class="btn btn-primary btn-lg btn-cta reveal d3">
+          <a href="#contato" class="btn btn-primary btn-lg reveal d4">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 12a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1.32h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 9.1a16 16 0 006.29 6.29l1.16-1.16a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+              <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/>
             </svg>
-            Solicitar orçamento
+            Solicitar Orçamento
           </a>
         </div>
       </div>
@@ -1268,17 +1219,15 @@
       <div class="container">
         <div class="contact-grid">
 
-          <!-- Info -->
           <div>
             <span class="tag reveal">Contato</span>
             <h2 class="sec-title reveal d1">Fale com a gente</h2>
-            <p class="sec-sub reveal d2">Pronto para dar o próximo passo? Entre em contato e vamos conversar sobre como podemos ajudar o seu negócio.</p>
+            <p class="sec-sub reveal d2">Conta o problema. A gente desenvolve a solução.</p>
 
             <div class="contact-info-list">
 
               <div class="contact-item reveal d3">
                 <div class="contact-icon" aria-hidden="true">
-                  <!-- WhatsApp icon -->
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/>
                   </svg>
@@ -1291,9 +1240,8 @@
 
               <div class="contact-item reveal d4">
                 <div class="contact-icon" aria-hidden="true">
-                  <!-- Instagram icon -->
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                    <rect x="2" y="2" width="20" height="20" rx="5"/>
                     <circle cx="12" cy="12" r="4"/>
                     <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
                   </svg>
@@ -1306,7 +1254,6 @@
 
               <div class="contact-item reveal d5">
                 <div class="contact-icon" aria-hidden="true">
-                  <!-- Mail icon -->
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
                     <polyline points="22,6 12,13 2,6"/>
@@ -1320,7 +1267,6 @@
 
               <div class="contact-item reveal d6">
                 <div class="contact-icon" aria-hidden="true">
-                  <!-- Location icon -->
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
                     <circle cx="12" cy="10" r="3"/>
@@ -1335,7 +1281,6 @@
             </div>
           </div>
 
-          <!-- Form -->
           <div class="contact-form-wrap reveal d2">
             <h3>Solicitar Orçamento</h3>
             <p>Preencha o formulário e entraremos em contato pelo WhatsApp.</p>
@@ -1366,20 +1311,20 @@
                 <select id="servico" name="servico">
                   <option value="">Selecione um serviço</option>
                   <option value="sistemas">Desenvolvimento de Sistemas</option>
-                  <option value="sites">Sites e Landing Pages</option>
-                  <option value="presenca">Gestão de Presença Digital</option>
-                  <option value="conteudo">Produção de Conteúdo</option>
-                  <option value="planos">Planos para Redes Sociais</option>
+                  <option value="automacoes">Automações</option>
+                  <option value="dashboards">Dashboards & Gestão</option>
+                  <option value="sites">Sites e Aplicações Web</option>
+                  <option value="marketing">Marketing Digital</option>
                   <option value="outro">Outro</option>
                 </select>
               </div>
               <div class="field">
-                <label for="mensagem">Mensagem</label>
-                <textarea id="mensagem" name="mensagem" placeholder="Conte um pouco sobre seu projeto ou necessidade..." required></textarea>
+                <label for="mensagem">Descreva o que precisa</label>
+                <textarea id="mensagem" name="mensagem" placeholder="Conte o processo que quer automatizar, o sistema que precisa desenvolver, ou a ideia que tem em mente..." required></textarea>
               </div>
               <button type="submit" class="btn btn-primary btn-form">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 12a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1.32h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 9.1a16 16 0 006.29 6.29l1.16-1.16a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+                  <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/>
                 </svg>
                 Enviar pelo WhatsApp
               </button>
@@ -1393,24 +1338,134 @@
   </main>
 
   <!-- ═══════════════════════════════════════════════════
+       SERVIÇOS COMPLEMENTARES (Planos de Redes Sociais)
+  ═══════════════════════════════════════════════════ -->
+  <section class="complement-section section">
+    <div class="container">
+      <div class="plans-head">
+        <span class="tag reveal">Serviços Complementares</span>
+        <h2 class="sec-title reveal d1">Gestão de Redes Sociais</h2>
+        <p class="sec-sub reveal d2">Nosso foco principal é desenvolvimento de software. Para empresas que também precisam de presença digital ativa, oferecemos planos de gestão de conteúdo.</p>
+      </div>
+
+      <div class="plans-grid">
+
+        <div class="plan-card reveal d1">
+          <div class="plan-top">
+            <p class="plan-name">Básico</p>
+            <p class="plan-desc">Ideal para quem está começando.</p>
+          </div>
+          <ul class="plan-features">
+            <li>
+              <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              3 posts por semana
+            </li>
+            <li>
+              <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              3 stories por semana
+            </li>
+            <li>
+              <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Planejamento mensal
+            </li>
+            <li>
+              <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              1 reunião mensal
+            </li>
+          </ul>
+          <a href="#contato" class="plan-btn plan-btn-outline">Contratar</a>
+        </div>
+
+        <div class="plan-card featured reveal d2">
+          <span class="plan-badge">Mais popular</span>
+          <div class="plan-top">
+            <p class="plan-name">Intermediário</p>
+            <p class="plan-desc">Para empresas em crescimento.</p>
+          </div>
+          <ul class="plan-features">
+            <li>
+              <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              5 posts por semana
+            </li>
+            <li>
+              <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              5 stories por semana
+            </li>
+            <li>
+              <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              2 vídeos por mês
+            </li>
+            <li>
+              <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Banco de ideias para reels
+            </li>
+            <li>
+              <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Planejamento estratégico
+            </li>
+            <li>
+              <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              2 reuniões mensais
+            </li>
+          </ul>
+          <a href="#contato" class="plan-btn plan-btn-solid">Contratar</a>
+        </div>
+
+        <div class="plan-card reveal d3">
+          <div class="plan-top">
+            <p class="plan-name">Premium</p>
+            <p class="plan-desc">Presença digital completa.</p>
+          </div>
+          <ul class="plan-features">
+            <li>
+              <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              5 posts por semana
+            </li>
+            <li>
+              <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Stories diários
+            </li>
+            <li>
+              <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              4 vídeos por mês
+            </li>
+            <li>
+              <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Cobertura de eventos
+            </li>
+            <li>
+              <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Relatório mensal
+            </li>
+            <li>
+              <svg class="plan-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Consultoria personalizada
+            </li>
+          </ul>
+          <a href="#contato" class="plan-btn plan-btn-outline">Contratar</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
        FOOTER
   ═══════════════════════════════════════════════════ -->
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
 
-        <!-- Brand -->
         <div class="footer-brand">
           <a href="#inicio" class="logo">
-            <svg class="logo-mark" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="logo-mark" viewBox="0 0 36 36" fill="none">
               <rect width="36" height="36" rx="9" fill="#96A480"/>
               <path d="M12 9 L12 27 M12 18 L24 9 M12 18.5 L24 27"
-                    stroke="white" stroke-width="2.2"
-                    stroke-linecap="round" stroke-linejoin="round"/>
+                    stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <span class="logo-name">KERODON</span>
           </a>
-          <p>Nordestino de raiz. Digital de essência. Tecnologia e estratégia digital para empresas que querem crescer.</p>
+          <p>Empresa de desenvolvimento de software. Sistemas, automações e aplicações web para empresas que querem mais produtividade.</p>
           <div class="social-row">
             <a href="https://instagram.com/kerodon.digital" target="_blank" rel="noopener" class="social-btn" aria-label="Instagram">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -1433,7 +1488,6 @@
           </div>
         </div>
 
-        <!-- Navigation -->
         <div class="footer-col">
           <h4>Navegação</h4>
           <ul>
@@ -1441,82 +1495,84 @@
             <li><a href="#sobre">Sobre</a></li>
             <li><a href="#servicos">Serviços</a></li>
             <li><a href="#diferenciais">Diferenciais</a></li>
-            <li><a href="#planos">Planos</a></li>
             <li><a href="#contato">Contato</a></li>
           </ul>
         </div>
 
-        <!-- Services -->
         <div class="footer-col">
           <h4>Serviços</h4>
           <ul>
             <li><a href="#servicos">Desenvolvimento de Sistemas</a></li>
-            <li><a href="#servicos">Sites e Landing Pages</a></li>
-            <li><a href="#servicos">Presença Digital</a></li>
-            <li><a href="#servicos">Produção de Conteúdo</a></li>
-            <li><a href="#planos">Planos para Redes Sociais</a></li>
+            <li><a href="#servicos">Automações</a></li>
+            <li><a href="#servicos">Dashboards & Gestão</a></li>
+            <li><a href="#servicos">Sites e Aplicações Web</a></li>
+            <li><a href="#servicos">Marketing Digital</a></li>
           </ul>
         </div>
 
-        <!-- Contact info -->
         <div class="footer-col">
           <h4>Contato</h4>
           <ul>
-            <li><a href="https://wa.me/5581999999999" target="_blank" rel="noopener">+55 (98) 99119-0311</a></li>
+            <li><a href="https://wa.me/5581999999999" target="_blank" rel="noopener">+55 (81) 9 9999-9999</a></li>
             <li><a href="https://instagram.com/kerodon.digital" target="_blank" rel="noopener">@kerodon.digital</a></li>
             <li><a href="mailto:contato@kerodon.com.br">contato@kerodon.com.br</a></li>
-            <li><a href="#contato">São Luís, Maranhão</a></li>
+            <li><a href="#contato">Recife, Pernambuco</a></li>
           </ul>
         </div>
 
       </div>
 
       <div class="footer-bottom">
-        <p>&copy; <span id="year"></span> <strong>KERODON</strong>. Todos os direitos reservados.</p>
+        <p>&copy; 2025 <strong>KERODON</strong>. Todos os direitos reservados.</p>
         <p>Feito com propósito no <strong>Nordeste brasileiro</strong>.</p>
       </div>
     </div>
   </footer>
 
-<script>
-  document.getElementById('year').textContent = new Date().getFullYear();
-</script>
   <script>
     // ─── HEADER SCROLL ────────────────────────────────
     const header = document.getElementById('header');
-    const onScroll = () => {
+    window.addEventListener('scroll', () => {
       header.classList.toggle('solid', window.scrollY > 40);
+    }, { passive: true });
+
+    // ─── DRAWER (MOBILE MENU) ─────────────────────────
+    const hamburger  = document.getElementById('hamburger');
+    const drawer     = document.getElementById('drawer');
+    const backdrop   = document.getElementById('drawerBackdrop');
+
+    const openDrawer = () => {
+      drawer.classList.add('open');
+      backdrop.classList.add('open');
+      hamburger.classList.add('open');
+      hamburger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+      drawer.querySelector('.drawer-close').focus();
     };
-    window.addEventListener('scroll', onScroll, { passive: true });
 
-    // ─── MOBILE MENU ──────────────────────────────────
-    const hamburger = document.getElementById('hamburger');
-    const mobileNav = document.getElementById('mobileNav');
+    const closeDrawer = () => {
+      drawer.classList.remove('open');
+      backdrop.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      hamburger.focus();
+    };
 
-    hamburger.addEventListener('click', () => {
-      const isOpen = mobileNav.classList.toggle('open');
-      hamburger.classList.toggle('open', isOpen);
-      hamburger.setAttribute('aria-expanded', isOpen);
-      document.body.style.overflow = isOpen ? 'hidden' : '';
-    });
+    hamburger.addEventListener('click', openDrawer);
+    backdrop.addEventListener('click', closeDrawer);
+    document.getElementById('drawerClose').addEventListener('click', closeDrawer);
 
-    document.querySelectorAll('.mobile-link').forEach(link => {
-      link.addEventListener('click', () => {
-        mobileNav.classList.remove('open');
-        hamburger.classList.remove('open');
-        hamburger.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
-      });
-    });
-
-    // Close on backdrop click
-    mobileNav.addEventListener('click', (e) => {
-      if (e.target === mobileNav) {
-        mobileNav.classList.remove('open');
-        hamburger.classList.remove('open');
-        hamburger.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
+    // Close on any drawer link/button click
+    drawer.querySelectorAll('a, button').forEach(el => {
+      if (el.id !== 'drawerClose') {
+        el.addEventListener('click', closeDrawer);
       }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && drawer.classList.contains('open')) closeDrawer();
     });
 
     // ─── SCROLL REVEAL ────────────────────────────────
@@ -1528,8 +1584,7 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
     revealEls.forEach(el => observer.observe(el));
 
     // ─── CONTACT FORM → WHATSAPP ──────────────────────
@@ -1543,16 +1598,16 @@
       const mensagem = document.getElementById('mensagem').value.trim();
 
       if (!nome || !email || !mensagem) {
-        alert('Por favor, preencha os campos obrigatórios: nome, e-mail e mensagem.');
+        alert('Por favor, preencha nome, e-mail e descrição do projeto.');
         return;
       }
 
       const servicoMap = {
         sistemas: 'Desenvolvimento de Sistemas',
-        sites: 'Sites e Landing Pages',
-        presenca: 'Gestão de Presença Digital',
-        conteudo: 'Produção de Conteúdo',
-        planos: 'Planos para Redes Sociais',
+        automacoes: 'Automações',
+        dashboards: 'Dashboards & Gestão',
+        sites: 'Sites e Aplicações Web',
+        marketing: 'Marketing Digital',
         outro: 'Outro'
       };
 
@@ -1562,30 +1617,39 @@
       msg += `*E-mail:* ${email}\n`;
       if (telefone) msg += `*Telefone:* ${telefone}\n`;
       if (servico) msg += `*Serviço:* ${servicoMap[servico] || servico}\n`;
-      msg += `\n*Mensagem:*\n${mensagem}`;
+      msg += `\n*Projeto/Necessidade:*\n${mensagem}`;
 
-      const encoded = encodeURIComponent(msg);
-      window.open(`https://wa.me/5581999999999?text=${encoded}`, '_blank');
+      window.open(`https://wa.me/5581999999999?text=${encodeURIComponent(msg)}`, '_blank');
     });
 
-    // ─── SMOOTH NAV ACTIVE STATE ──────────────────────
+    // ─── NAV ACTIVE HIGHLIGHT ─────────────────────────
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('nav a');
 
-    const navObserver = new IntersectionObserver((entries) => {
+    new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          const id = entry.target.getAttribute('id');
+          const id = entry.target.id;
           navLinks.forEach(link => {
             link.style.color = link.getAttribute('href') === `#${id}`
-              ? 'var(--green-dark)'
-              : '';
+              ? 'var(--green-dark)' : '';
           });
         }
       });
-    }, { threshold: 0.45 });
+    }, { threshold: 0.45 }).observe;
 
-    sections.forEach(s => navObserver.observe(s));
+    sections.forEach(s => {
+      new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            navLinks.forEach(link => {
+              link.style.color = link.getAttribute('href') === `#${entry.target.id}`
+                ? 'var(--green-dark)' : '';
+            });
+          }
+        });
+      }, { threshold: 0.4 }).observe(s);
+    });
   </script>
 
 </body>
