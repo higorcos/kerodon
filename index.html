@@ -156,7 +156,7 @@
     .hamburger {
       display: none; background: none; border: none;
       cursor: pointer; padding: 9px; flex-direction: column;
-      gap: 5.5px; z-index: 901; position: relative;
+      gap: 5.5px; z-index: 903; position: relative;
       border-radius: var(--r-sm); transition: background .2s var(--ease);
     }
     .hamburger:hover { background: var(--green-xlight); }
@@ -170,7 +170,7 @@
 
     /* ─── DRAWER (MOBILE MENU) ────────────────────────── */
     .drawer-backdrop {
-      position: fixed; inset: 0; z-index: 898;
+      position: fixed; inset: 0; z-index: 901;
       background: rgba(45,49,44,.52);
       opacity: 0; pointer-events: none;
       transition: opacity .35s var(--ease);
@@ -179,7 +179,7 @@
     .drawer-backdrop.open { opacity: 1; pointer-events: all; }
 
     .drawer {
-      position: fixed; top: 0; right: 0; bottom: 0; z-index: 899;
+      position: fixed; top: 0; right: 0; bottom: 0; z-index: 902;
       width: min(340px, 88vw);
       background: var(--white);
       transform: translateX(100%);
