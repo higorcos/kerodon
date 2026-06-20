@@ -155,9 +155,11 @@
 
     .hamburger {
       display: none; background: none; border: none;
-      cursor: pointer; padding: 6px; flex-direction: column;
-      gap: 5px; z-index: 901; position: relative;
+      cursor: pointer; padding: 9px; flex-direction: column;
+      gap: 5.5px; z-index: 901; position: relative;
+      border-radius: var(--r-sm); transition: background .2s var(--ease);
     }
+    .hamburger:hover { background: var(--green-xlight); }
     .hamburger span {
       display: block; width: 22px; height: 2px;
       background: var(--ink); border-radius: 2px; transition: var(--t);
@@ -191,7 +193,9 @@
 
     .drawer-head {
       display: flex; align-items: center;
-      justify-content: space-between; margin-bottom: 44px;
+      justify-content: space-between; margin-bottom: 36px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(45,49,44,.07);
       flex-shrink: 0;
     }
     .drawer-close {
@@ -206,27 +210,33 @@
       display: flex; flex-direction: column; flex: 1;
     }
     .drawer-link {
-      font-size: 1.05rem; font-weight: 500; color: var(--ink);
-      text-decoration: none; padding: 15px 0;
-      border-bottom: 1px solid var(--bg);
-      transition: var(--t); display: flex; align-items: center;
+      font-size: 1.15rem; font-weight: 500; color: var(--ink);
+      text-decoration: none; padding: 17px 0;
+      border-bottom: 1px solid rgba(45,49,44,.07);
+      transition: color .2s var(--ease), padding-left .2s var(--ease);
+      display: flex; align-items: center;
       justify-content: space-between;
     }
     .drawer-link:last-child { border-bottom: none; }
-    .drawer-link:hover { color: var(--green-dark); padding-left: 8px; }
+    .drawer-link:hover { color: var(--green-dark); padding-left: 6px; }
     .drawer-arrow {
-      font-size: .9rem; color: var(--green-light);
-      transition: var(--t); opacity: 0; line-height: 1;
+      font-size: .85rem; color: var(--green);
+      line-height: 1; opacity: .45;
+      transition: opacity .2s var(--ease), transform .2s var(--ease);
     }
-    .drawer-link:hover .drawer-arrow { opacity: 1; color: var(--green); }
+    .drawer-link:hover .drawer-arrow { opacity: 1; transform: translateX(3px); }
 
     .drawer-footer {
-      margin-top: 36px; padding-top: 28px;
-      border-top: 1px solid var(--bg); flex-shrink: 0;
+      margin-top: 32px; padding-top: 24px;
+      border-top: 1px solid rgba(45,49,44,.07); flex-shrink: 0;
     }
-    .drawer-footer .btn { width: 100%; justify-content: center; margin-bottom: 14px; }
+    .drawer-footer .btn {
+      width: 100%; justify-content: center;
+      margin-bottom: 14px; padding: 16px;
+      font-size: .95rem;
+    }
     .drawer-contact {
-      text-align: center; font-size: .8rem; color: var(--ink-muted);
+      text-align: center; font-size: .82rem; color: var(--ink-muted);
     }
     .drawer-contact a {
       color: var(--green-dark); text-decoration: none;
@@ -683,6 +693,16 @@
 
     @media (max-width: 768px) {
       .section { padding: 72px 0; }
+
+      /* Header sempre sólido no mobile — sem transparência */
+      .header {
+        background: rgba(245,242,234,.97) !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        box-shadow: 0 1px 0 rgba(45,49,44,.08) !important;
+        padding: 12px 0 !important;
+      }
+
       nav, .header-cta .btn-primary { display: none; }
       .hamburger { display: flex; }
 
@@ -716,6 +736,12 @@
       .footer-grid { grid-template-columns: 1fr; }
       .about-card { padding: 32px; }
       .contact-form-wrap { padding: 32px 24px; }
+    }
+
+    @media (max-width: 380px) {
+      .logo-name { font-size: 1.1rem; }
+      .drawer { padding: 22px 20px 28px; }
+      .drawer-link { font-size: 1.05rem; padding: 15px 0; }
     }
   </style>
 </head>
@@ -807,10 +833,7 @@
         <div class="hero-grid">
 
           <div class="hero-content">
-            <div class="hero-badge">
-              <span class="hero-badge-dot"></span>
-              Empresa de desenvolvimento de software
-            </div>
+           
 
             <h1 class="hero-title">
               Seu processo manual<br>
@@ -941,14 +964,7 @@
               <p class="about-slogan">Nordestino de raiz.<br>Digital de essência.</p>
               <div class="about-divider"></div>
               <div class="about-stats">
-                <div class="about-stat">
-                  <span class="stat-num">100%</span>
-                  <span class="stat-lbl">Personalizado</span>
-                </div>
-                <div class="about-stat">
-                  <span class="stat-num">0</span>
-                  <span class="stat-lbl">Templates genéricos</span>
-                </div>
+                
               </div>
             </div>
           </div>
@@ -1077,81 +1093,11 @@
       </div>
     </section>
 
-    <!-- ═══════════════════════════════════════════════════
-         DIFERENCIAIS
-    ═══════════════════════════════════════════════════ -->
-    <section class="diff section" id="diferenciais">
-      <div class="container">
-        <div class="diff-head">
-          <span class="tag reveal">Por que KERODON</span>
-          <h2 class="sec-title reveal d1">Diferenciais que importam.</h2>
-          <p class="sec-sub reveal d2">Não prometemos tecnologia. Entregamos resultado.</p>
-        </div>
-
-        <div class="diff-grid">
-
-          <div class="diff-item reveal d1">
-            <div class="diff-icon" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-              </svg>
-            </div>
-            <h3>Menos planilhas.<br>Mais produtividade.</h3>
-            <p>Automatizamos tarefas manuais para que sua equipe foque no que realmente gera resultado.</p>
-          </div>
-
-          <div class="diff-item reveal d2">
-            <div class="diff-icon" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              </svg>
-            </div>
-            <h3>Menos retrabalho.<br>Mais controle.</h3>
-            <p>Sistemas desenvolvidos para o seu processo real — não adaptações de templates que nunca encaixam direito.</p>
-          </div>
-
-          <div class="diff-item reveal d3">
-            <div class="diff-icon" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
-                <circle cx="9" cy="7" r="4"/>
-                <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
-              </svg>
-            </div>
-            <h3>Você fala direto<br>com quem desenvolve.</h3>
-            <p>Sem intermediários. A equipe que cria o sistema é a mesma que atende, entende e entrega.</p>
-          </div>
-
-          <div class="diff-item reveal d4">
-            <div class="diff-icon" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="16 18 22 12 16 6"/>
-                <polyline points="8 6 2 12 8 18"/>
-              </svg>
-            </div>
-            <h3>Soluções desenvolvidas<br>para o seu processo.</h3>
-            <p>Levantamos os requisitos, entendemos a operação e desenvolvemos exatamente o que o seu negócio precisa.</p>
-          </div>
-
-          <div class="diff-item reveal d5">
-            <div class="diff-icon" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="12 2 2 7 12 12 22 7 12 2"/>
-                <polyline points="2 17 12 22 22 17"/>
-                <polyline points="2 12 12 17 22 12"/>
-              </svg>
-            </div>
-            <h3>Software que cresce<br>com a sua empresa.</h3>
-            <p>Código limpo, arquitetura escalável. O sistema que entregamos hoje suporta o crescimento de amanhã.</p>
-          </div>
-
-        </div>
-      </div>
-    </section>
+   
 
     <!-- ═══════════════════════════════════════════════════
          PROCESSO
-    ═══════════════════════════════════════════════════ -->
+    ═══════════════════════════════════════════════════ 
     <section class="process section">
       <div class="container">
         <div class="process-head">
@@ -1189,7 +1135,7 @@
         </div>
       </div>
     </section>
-
+-->
     <!-- ═══════════════════════════════════════════════════
          CTA
     ═══════════════════════════════════════════════════ -->
@@ -1339,8 +1285,8 @@
 
   <!-- ═══════════════════════════════════════════════════
        SERVIÇOS COMPLEMENTARES (Planos de Redes Sociais)
-  ═══════════════════════════════════════════════════ -->
-  <section class="complement-section section">
+  ═══════════════════════════════════════════════════ 
+  <section class="diff section">
     <div class="container">
       <div class="plans-head">
         <span class="tag reveal">Serviços Complementares</span>
@@ -1448,7 +1394,7 @@
       </div>
     </div>
   </section>
-
+-->
   <!-- ═══════════════════════════════════════════════════
        FOOTER
   ═══════════════════════════════════════════════════ -->
