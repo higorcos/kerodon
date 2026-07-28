@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#EFEBE0"/>
+
+  <!-- logo mark -->
+  <g transform="translate(475,185)">
+    <rect width="250" height="250" rx="62" fill="#96A480"/>
+    <path d="M83 62 L83 187 M83 125 L167 62 M83 128 L167 187" stroke="white" stroke-width="15"
+      stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+
+  <text x="600" y="500" font-family="Georgia, 'Playfair Display', serif" font-size="76" font-weight="600"
+    fill="#2D312C" text-anchor="middle" letter-spacing="4">KERODON</text>
+
+  <text x="600" y="548" font-family="Arial, sans-serif" font-size="26" fill="#636b5d" text-anchor="middle"
+    letter-spacing="1">Desenvolvimento de Software sob medida</text>
+</svg>
